@@ -1,0 +1,37 @@
+<table class="min-w-full divide-y divide-gray-300">
+  <thead>
+    <tr>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Time</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Latitude</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Longitude</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Battery status</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Battery level</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Internet</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Wifi</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Mode</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Trigger</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">POI</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Tag</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Regions</th>
+    </tr>
+  </thead>
+
+  <tbody class="bg-white">
+    <% @locations.each do |location| %>
+      <tr class="even:bg-gray-50">
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= Time.at(location.tst) %></td>
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.lat %></td>
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.lon %></td>
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.battery_status %></td>
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.batt %></td>
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.internet_connectivity_status %></td>
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.ssid %></td>
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.monitoring_mode %></td>
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.t %></td>
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.poi %></td>
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.tag %></td>
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.inregions.join(", ") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
