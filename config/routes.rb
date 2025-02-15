@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   resources :owntracks, only: [ :create ]
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "owntracks#index"
 end

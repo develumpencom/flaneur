@@ -1,5 +1,9 @@
 class OwntracksController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token, only: [ :create ]
+
+  def index
+    @locations = Location.order(tst: :desc).limit(100)
+  end
 
   def create
     case params[:owntrack][:_type]
