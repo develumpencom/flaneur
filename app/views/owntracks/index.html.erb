@@ -1,7 +1,15 @@
-<table class="min-w-full divide-y divide-gray-300">
-  <thead>
+<div id="map"
+     data-controller="map"
+     data-map-target="container"
+     data-map-icon-value="<%= image_path("marker-icon.png") %>"
+     data-map-location-outlet=".location"
+     data-action="location:selectLocation@window->map#setSelectedLocation"
+     class="sticky top-10 mb-10 h-96"></div>
+
+<table class="min-w-full border-collapse">
+  <thead class="sticky top-[calc(24rem+2.5rem)] bg-white">
     <tr>
-      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Time</th>
+      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" >Time</th>
       <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Latitude</th>
       <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Longitude</th>
       <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Battery status</th>
@@ -18,7 +26,12 @@
 
   <tbody class="bg-white">
     <% @locations.each do |location| %>
-      <tr class="even:bg-gray-50">
+      <tr data-controller="location"
+          data-location-target="location"
+          data-action="click->location#selectLocation"
+          data-location-lat-value="<%= location.lat %>"
+          data-location-lon-value="<%= location.lon %>"
+          class="location even:bg-gray-50 hover:bg-gray-100 cursor-pointer">
         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= Time.at(location.tst) %></td>
         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.lat %></td>
         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.lon %></td>
