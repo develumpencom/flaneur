@@ -3,8 +3,10 @@
      data-map-target="container"
      data-map-icon-value="<%= image_path("marker-icon.png") %>"
      data-map-location-outlet=".location"
-     data-action="location:selectLocation@window->map#setSelectedLocation"
+     data-action="location:selectLocation@window->map#setSelectedLocation location:addLocation@window->map#addLocation location:removeLocation@window->map#removeLocation"
      class="sticky top-10 mb-10 h-96"></div>
+
+<%= turbo_stream_from(:locations) %>
 
 <table class="min-w-full border-collapse">
   <thead class="sticky top-[calc(24rem+2.5rem)] bg-white">
@@ -24,27 +26,9 @@
     </tr>
   </thead>
 
-  <tbody class="bg-white">
+  <tbody id="locations" class="bg-white">
     <% @locations.each do |location| %>
-      <tr data-controller="location"
-          data-location-target="location"
-          data-action="click->location#selectLocation"
-          data-location-lat-value="<%= location.lat %>"
-          data-location-lon-value="<%= location.lon %>"
-          class="location even:bg-gray-50 hover:bg-gray-100 cursor-pointer">
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= Time.at(location.tst) %></td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.lat %></td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.lon %></td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.battery_status %></td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.batt %></td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.internet_connectivity_status %></td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.ssid %></td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.monitoring_mode %></td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.t %></td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.poi %></td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.tag %></td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= location.inregions.join(", ") %></td>
-      </tr>
+      <%= render partial: "location_row", locals: { location: location } %>
     <% end %>
   </tbody>
 </table>
