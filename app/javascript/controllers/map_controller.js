@@ -9,12 +9,15 @@ export default class extends Controller {
     icon: String
   }
 
+  selectedLocationMarker = undefined
+  circles = {}
+
   // lifecycle
 
   connect() {
     this.createMap()
     this.setSelectedLocation({ detail: { location: this.locationOutlet } })
-    this.initializeLocations()
+    this.initializeLocationCircles()
   }
 
   disconnect() {
@@ -32,10 +35,10 @@ export default class extends Controller {
     }).addTo(this.map);
   }
 
-  initializeLocations() {
+  initializeLocationCircles() {
     if (this.hasLocationOutlet) {
       this.locationOutlets.forEach(location => {
-        this.addCircle(location.latValue, location.lonValue)
+        this.addLocationCircle(location)
       })
     }
   }
@@ -56,14 +59,36 @@ export default class extends Controller {
     this.map.setView([location.latValue, location.lonValue], 17)
   }
 
+  addLocationCircle(location) {
+    const newCircle = this.addCircle(location.latValue, location.lonValue)
+    this.circles[location.element.id] = newCircle
+    newCircle.addTo(this.map)
+  }
+
+  removeLocationCircle(elementId) {
+    const circleToRemove = this.circles[elementId]
+    this.map.removeLayer(circleToRemove)
+    delete this.circles[elementId]
+  }
+
+  // events
+
+  addLocation({ detail: { location } }) {
+    this.addLocationCircle(location)
+  }
+
+  removeLocation({ detail: { elementId } }) {
+    this.removeLocationCircle(elementId)
+  }
+
   // helpers
 
   addCircle(lat, lon) {
-    L.circle([lat, lon], {
+    return L.circle([lat, lon], {
       color: 'red',
       fillColor: 'red',
       fillOpacity: 0.5,
       radius: 5
-    }).addTo(this.map);
+    })
   }
 }

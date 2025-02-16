@@ -3,7 +3,7 @@
      data-map-target="container"
      data-map-icon-value="<%= image_path("marker-icon.png") %>"
      data-map-location-outlet=".location"
-     data-action="location:selectLocation@window->map#setSelectedLocation"
+     data-action="location:selectLocation@window->map#setSelectedLocation location:addLocation@window->map#addLocation location:removeLocation@window->map#removeLocation"
      class="sticky top-10 mb-10 h-96"></div>
 
 <%= turbo_stream_from(:locations) %>
